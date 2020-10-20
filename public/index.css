@@ -1,0 +1,19 @@
+*{box-sizing: border-box;}
+
+h1{
+    text-align: center;
+    color: green;
+}
+
+#login, #logout{
+    text-align: center;
+}
+
+
+.online{
+    color: green;
+}
+.playing{
+    color: red;
+}
+
