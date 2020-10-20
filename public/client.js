@@ -18,29 +18,19 @@ const login = () => {
 
 loginButton.addEventListener("click", login)
 
-const printSocketid = () => {console.log("SOCKET-id: " + socket.id)}
-//setTimeout(printSocketid, 3000)
-
 const userObj = (id) => {
-    userList.find(obj => {
-        console.log("OBJJJJ-> " + obj);
+    userList.find(obj => {        
         if(obj.id == id){
             return obj;
         }
     })
 }
 
-
 const logout = () => {
-    console.log("LOGOUT:...")
     let msg = new logoutMessage("logout", username);
     sendMessageToServer(msg);
     socket.disconnect(true)
-//    location.reload();
-
 }
-
-
 
 function loginMessage(msgType, username)
 {
@@ -78,8 +68,6 @@ const sendMessageToServer = (msg) => {
 socket.on('login', state => {
     let obj = JSON.parse(state);
 
-    console.log("LOGIN...")
-
     let btn = document.querySelector("#login");
     btn.id = '#logout';
     btn.innerText = 'logout';
@@ -88,7 +76,6 @@ socket.on('login', state => {
 
     if(obj.state == ONLINE)
     {
-        console.log("STATE-> " + obj.state)
         if(obj.username == username)
         {
             state = ONLINE;
@@ -101,11 +88,7 @@ socket.on('login', state => {
 
 socket.on('userlist', list => {
     userList = JSON.parse(list);
-    console.log("USERLIST: " + list)
-
-//    if(state == ONLINE)
-        showUserList();
-
+    showUserList();
 })
 
 socket.on('match-request', request => {
@@ -134,11 +117,6 @@ socket.on('match-response', response => {
     }
     else
     alert("player said no to challenge")
-    
-/*     let resp = new MatchResponse("match-response", res.to, res.from, answer)
-
-    socket.emit(resp.type, JSON.stringify(msg));
- */
 })
 
 
@@ -180,7 +158,6 @@ const showUserList = () => {
 const challenge = (event) => {
     let opponent = event.currentTarget.getAttribute("id");
     let req = new matchRequest("match-request", username, opponent);
-    console.log(req)    
     sendMessageToServer(req)
 }
 

@@ -18,20 +18,6 @@ function loginState(username, state, userList){
     this.state = state
 }
 
-function matchRequest(type, username, opponent)
-{
-    this.type = type,
-    this.from = username,
-    this.to = opponent
-}
-
-function matchRespone(type, username, opponent)
-{
-    this.type = type,
-    this.from = username,
-    this.to = opponent
-}
-
 function getSocketOfUser(id)
 {
     for(let i=0; i < userList.length; i++)
@@ -42,15 +28,12 @@ function getSocketOfUser(id)
 }
 
 
-// HTTP
 const http = require('http');
 let httpServer = http.Server(expressServer);
 
-// WEBSOCKETS
 const socketIo = require('socket.io');
 let io = socketIo(httpServer);
 
- // Wird bei Verbindungsversuch gefeuert
 io.on('connect', socket => {
     console.log("SERVER-SOCKET: " + socket.id);
 
@@ -61,26 +44,23 @@ io.on('connect', socket => {
         {
             let us = new userState(username, socket.id, ONLINE);
             userList.push(us);
-            console.log("USERLIST added -> " + JSON.stringify(us))
             console.log(userList);
             io.to(socket.id).emit('login', JSON.stringify(new loginState(username, ONLINE)))
             io.emit('userlist', JSON.stringify(userList))  
         }
     })
 
-      socket.on('match-request', data => {
-        let msg = JSON.parse(data);
+    socket.on('match-request', data => {
+    let msg = JSON.parse(data);
 
-        const socket_to = getSocketOfUser(msg.to)
+    const socket_to = getSocketOfUser(msg.to)
 
-        io.to(socket_to).emit('match-request', data);
+    io.to(socket_to).emit('match-request', data);
 
     }) 
 
     socket.on('match-response', data => {
-
         let msg = JSON.parse(data);
-
         io.to(getSocketOfUser(msg.to)).emit('match-response', data);        
 
     }) 
@@ -88,8 +68,6 @@ io.on('connect', socket => {
     socket.on('move', data => {
         io.emit('move', data);
     })
-
-
 })
 
 

@@ -176,7 +176,6 @@ function getKlickPosition(canvas, event) {
 
 if(typeof socket !== 'undefined'){
     socket.on('move', response => {
-    //    alert("move ");
         balls[0] = response;
         setInterval(updateCanvas, 10);    
     })

@@ -94,23 +94,14 @@ const billard_utils = {
     },
 
     drawHoleEdges(){
-        // corner-length
         let c = this.TABLE_EDGE/3*4;
         this.ctx.fillStyle = "#D3D3D3";
-        // top left
         this.ctx.fillRect(0, 0, c, c)
-        // top middle
         this.ctx.fillRect(this.width / 2 - c/2, 0, c,c)
-        // top right        
         this.ctx.fillRect(this.width - c, 0, c, c)
-
-        // down left
         this.ctx.fillRect(0, this.height - c, c, c) // down left
-        // down middle
         this.ctx.fillRect(this.width / 2 - c/2, this.height - c, c, c)
-        // down right
         this.ctx.fillRect(this.width - c, this.height-c, c, c)
-
    },
 
    drawHoles(){
